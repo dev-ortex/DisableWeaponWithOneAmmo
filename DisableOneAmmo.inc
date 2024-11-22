@@ -16,7 +16,11 @@ public OnPlayerWeaponShot(playerid, weaponid, hittype, hitid, Float:fX, Float:fY
         SetPlayerArmedWeapon(playerid, 0);
         return 0;
     }
-    return 1;
+    #if defined HOOK_OnPlayerWeaponShot
+        return HOOK_OnPlayerWeaponShot(playerid, weaponid, hittype, hitid, fX, fY, fZ);
+    #else
+        return 1;
+    #endif
 }
 
 #if defined _ALS_OnPlayerWeaponShot
@@ -24,6 +28,9 @@ public OnPlayerWeaponShot(playerid, weaponid, hittype, hitid, Float:fX, Float:fY
 #else
     #define _ALS_OnPlayerWeaponShot
 #endif
+
+#define OnPlayerWeaponShot HOOK_OnPlayerWeaponShot
+
 #if defined HOOK_OnPlayerWeaponShot
     forward HOOK_OnPlayerWeaponShot(playerid, weaponid, hittype, hitid, Float:fX, Float:fY, Float:fZ); 
-#endif 
+#endif
